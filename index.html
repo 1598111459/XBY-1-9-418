@@ -1,6 +1,24 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '25569354989380136');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=25569354989380136&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IBEX 35 | Mercado Bursátil Español</title>
@@ -80,6 +98,9 @@
             font-weight: 500;
             text-decoration: none;
             transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .btn-primary {
@@ -90,6 +111,20 @@
 
         .btn-primary:hover {
             background-color: #1d4ed8;
+        }
+
+        /* WhatsApp按钮特殊样式 */
+        .btn-whatsapp {
+            background-color: #25d366;
+            color: white;
+            border: 1px solid #25d366;
+            font-size: 1.1rem;
+            padding: 12px 28px;
+            cursor: pointer;
+        }
+
+        .btn-whatsapp:hover {
+            background-color: #128c7e;
         }
 
         /* 英雄区域 */
@@ -285,12 +320,37 @@
             font-size: 0.95rem;
         }
 
+        /* 合作伙伴板块 */
+        .partner-section {
+            padding: 80px 0;
+            background-color: #ffffff;
+            border-radius: 12px;
+            margin: 60px auto;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+
+        .partner-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #0f172a;
+        }
+
+        .partner-desc {
+            font-size: 1.1rem;
+            color: #475569;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            line-height: 1.8;
+        }
+
         /* 页脚 */
         footer {
             background-color: #0f172a;
             color: #ffffff;
             padding: 60px 0 30px;
-            margin-top: 80px;
+            margin-top: 40px;
         }
 
         .footer-grid {
@@ -377,6 +437,10 @@
             .index-value {
                 text-align: center;
             }
+
+            .partner-title {
+                font-size: 1.8rem;
+            }
         }
 
         @media (max-width: 768px) {
@@ -394,6 +458,15 @@
 
             .news-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .partner-title {
+                font-size: 1.6rem;
+            }
+
+            .partner-desc {
+                font-size: 1rem;
+                padding: 0 10px;
             }
         }
     </style>
@@ -413,7 +486,6 @@
                     <a href="#news">Noticias</a>
                     <a href="#analysis">Análisis</a>
                 </div>
-                <a href="#" class="btn btn-primary">Iniciar Sesión</a>
             </nav>
         </div>
     </header>
@@ -424,7 +496,12 @@
             <div class="hero-content">
                 <h1 class="hero-title">El Mercado Bursátil <span>Español</span> al Alcance de tu Mano</h1>
                 <p class="hero-desc">Seguimiento en tiempo real del IBEX 35, acciones españolas líderes y análisis experto para tomar decisiones informadas.</p>
-                <a href="#stocks" class="btn btn-primary">Ver Acciones Populares</a>
+                
+                <!-- WhatsApp按钮 - 添加id用于绑定事件 -->
+                <a id="heroWhatsappBtn" href="https://wa.me/85257614955?text=Quiero obtener acciones de alto potencial" target="_blank" class="btn btn-whatsapp">
+                    <i class="fab fa-whatsapp"></i>
+                    Contáctanos por WhatsApp
+                </a>
             </div>
             <div class="hero-image">
                 <img src="https://picsum.photos/id/180/600/400" alt="Mercado bursátil español">
@@ -449,7 +526,7 @@
 
             <h2 class="section-title">Acciones Populares</h2>
             <div id="stocks" class="stocks-grid">
-                <!-- 股票卡片 1 -->
+                <!-- 股票卡片 -->
                 <div class="stock-card">
                     <div class="stock-header">
                         <div class="stock-name">Banco Santander</div>
@@ -459,7 +536,6 @@
                     <div class="change positive">+0.87% (+0.03)</div>
                 </div>
 
-                <!-- 股票卡片 2 -->
                 <div class="stock-card">
                     <div class="stock-header">
                         <div class="stock-name">Telefónica</div>
@@ -469,7 +545,6 @@
                     <div class="change positive">+1.53% (+0.06)</div>
                 </div>
 
-                <!-- 股票卡片 3 -->
                 <div class="stock-card">
                     <div class="stock-header">
                         <div class="stock-name">Inditex</div>
@@ -479,7 +554,6 @@
                     <div class="change negative">-0.42% (-0.13)</div>
                 </div>
 
-                <!-- 股票卡片 4 -->
                 <div class="stock-card">
                     <div class="stock-header">
                         <div class="stock-name">BBVA</div>
@@ -489,7 +563,6 @@
                     <div class="change positive">+0.97% (+0.06)</div>
                 </div>
 
-                <!-- 股票卡片 5 -->
                 <div class="stock-card">
                     <div class="stock-header">
                         <div class="stock-name">Repsol</div>
@@ -499,7 +572,6 @@
                     <div class="change negative">-0.78% (-0.10)</div>
                 </div>
 
-                <!-- 股票卡片 6 -->
                 <div class="stock-card">
                     <div class="stock-header">
                         <div class="stock-name">Iberdrola</div>
@@ -517,7 +589,6 @@
         <div class="container">
             <h2 class="section-title">Noticias del Mercado Español</h2>
             <div class="news-grid">
-                <!-- 新闻卡片 1 -->
                 <div class="news-card">
                     <img src="https://picsum.photos/id/20/600/400" alt="Noticia mercado" class="news-img">
                     <div class="news-content">
@@ -527,7 +598,6 @@
                     </div>
                 </div>
 
-                <!-- 新闻卡片 2 -->
                 <div class="news-card">
                     <img src="https://picsum.photos/id/48/600/400" alt="Noticia Inditex" class="news-img">
                     <div class="news-content">
@@ -537,7 +607,6 @@
                     </div>
                 </div>
 
-                <!-- 新闻卡片 3 -->
                 <div class="news-card">
                     <img src="https://picsum.photos/id/104/600/400" alt="Noticia energía" class="news-img">
                     <div class="news-content">
@@ -547,6 +616,19 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- 合作伙伴板块 -->
+    <section class="partner-section">
+        <div class="container">
+            <h2 class="partner-title">¿Quieres ser nuestro socio comercial?</h2>
+            <p class="partner-desc">Si estás interesado en colaborar con nosotros y formar parte de nuestra red de partners en el sector financiero español, no dudes en contactarnos a través de WhatsApp para más información.</p>
+            <!-- WhatsApp按钮 - 添加id用于绑定事件 -->
+            <a id="partnerWhatsappBtn" href="https://wa.me/85257614955?text=Quiero obtener acciones de alto potencial" target="_blank" class="btn btn-whatsapp">
+                <i class="fab fa-whatsapp"></i>
+                Contáctanos por WhatsApp
+            </a>
         </div>
     </section>
 
@@ -562,6 +644,8 @@
                         <a href="#"><i class="fab fa-facebook"></i></a>
                         <a href="#"><i class="fab fa-linkedin"></i></a>
                         <a href="#"><i class="fab fa-instagram"></i></a>
+                        <!-- WhatsApp链接 - 添加id用于绑定事件 -->
+                        <a id="footerWhatsappBtn" href="https://wa.me/85257614955?text=Quiero obtener acciones de alto potencial" target="_blank"><i class="fab fa-whatsapp"></i></a>
                     </div>
                 </div>
                 <div class="footer-col">
@@ -599,7 +683,7 @@
     </footer>
 
     <script>
-        // 简单的滚动动画效果
+        // 滚动动画
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -609,7 +693,7 @@
             });
         });
 
-        // 模拟股票价格轻微波动的效果
+        // 模拟股票价格波动
         function updateStockPrices() {
             const changeElements = document.querySelectorAll('.change');
             changeElements.forEach(el => {
@@ -625,8 +709,28 @@
             });
         }
 
-        // 每10秒更新一次股票价格（模拟实时数据）
         setInterval(updateStockPrices, 10000);
+
+        // 定义触发Contact事件的函数
+        function trackContactEvent() {
+            // 触发Facebook Pixel的Contact转化事件
+            fbq('track', 'Contact');
+            // 可选：控制台打印，方便测试验证
+            console.log('Facebook Pixel Contact事件已触发');
+        }
+
+        // 为所有WhatsApp按钮绑定点击事件，触发Contact追踪
+        const whatsappButtons = [
+            document.getElementById('heroWhatsappBtn'),
+            document.getElementById('partnerWhatsappBtn'),
+            document.getElementById('footerWhatsappBtn')
+        ];
+
+        whatsappButtons.forEach(btn => {
+            if (btn) {
+                btn.addEventListener('click', trackContactEvent);
+            }
+        });
     </script>
 </body>
 </html>
