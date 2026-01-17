@@ -120,6 +120,7 @@
             border: 1px solid #25d366;
             font-size: 1.1rem;
             padding: 12px 28px;
+            cursor: pointer;
         }
 
         .btn-whatsapp:hover {
@@ -496,8 +497,8 @@
                 <h1 class="hero-title">El Mercado Bursátil <span>Español</span> al Alcance de tu Mano</h1>
                 <p class="hero-desc">Seguimiento en tiempo real del IBEX 35, acciones españolas líderes y análisis experto para tomar decisiones informadas.</p>
                 
-                <!-- WhatsApp按钮 -->
-                <a href="https://wa.me/85257614955?text=Quiero obtener acciones de alto potencial" target="_blank" class="btn btn-whatsapp">
+                <!-- WhatsApp按钮 - 添加id用于绑定事件 -->
+                <a id="heroWhatsappBtn" href="https://wa.me/85257614955?text=Quiero obtener acciones de alto potencial" target="_blank" class="btn btn-whatsapp">
                     <i class="fab fa-whatsapp"></i>
                     Contáctanos por WhatsApp
                 </a>
@@ -623,7 +624,8 @@
         <div class="container">
             <h2 class="partner-title">¿Quieres ser nuestro socio comercial?</h2>
             <p class="partner-desc">Si estás interesado en colaborar con nosotros y formar parte de nuestra red de partners en el sector financiero español, no dudes en contactarnos a través de WhatsApp para más información.</p>
-            <a href="https://wa.me/85257614955?text=Quiero obtener acciones de alto potencial" target="_blank" class="btn btn-whatsapp">
+            <!-- WhatsApp按钮 - 添加id用于绑定事件 -->
+            <a id="partnerWhatsappBtn" href="https://wa.me/85257614955?text=Quiero obtener acciones de alto potencial" target="_blank" class="btn btn-whatsapp">
                 <i class="fab fa-whatsapp"></i>
                 Contáctanos por WhatsApp
             </a>
@@ -642,7 +644,8 @@
                         <a href="#"><i class="fab fa-facebook"></i></a>
                         <a href="#"><i class="fab fa-linkedin"></i></a>
                         <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="https://wa.me/85257614955?text=Quiero obtener acciones de alto potencial" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                        <!-- WhatsApp链接 - 添加id用于绑定事件 -->
+                        <a id="footerWhatsappBtn" href="https://wa.me/85257614955?text=Quiero obtener acciones de alto potencial" target="_blank"><i class="fab fa-whatsapp"></i></a>
                     </div>
                 </div>
                 <div class="footer-col">
@@ -707,6 +710,27 @@
         }
 
         setInterval(updateStockPrices, 10000);
+
+        // 定义触发Contact事件的函数
+        function trackContactEvent() {
+            // 触发Facebook Pixel的Contact转化事件
+            fbq('track', 'Contact');
+            // 可选：控制台打印，方便测试验证
+            console.log('Facebook Pixel Contact事件已触发');
+        }
+
+        // 为所有WhatsApp按钮绑定点击事件，触发Contact追踪
+        const whatsappButtons = [
+            document.getElementById('heroWhatsappBtn'),
+            document.getElementById('partnerWhatsappBtn'),
+            document.getElementById('footerWhatsappBtn')
+        ];
+
+        whatsappButtons.forEach(btn => {
+            if (btn) {
+                btn.addEventListener('click', trackContactEvent);
+            }
+        });
     </script>
 </body>
 </html>
