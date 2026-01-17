@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IBEX 35 | Mercado Bursátil Español</title>
+    <!-- 引入字体和图标 -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 全局样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        /* 容器样式 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* 导航栏 */
+        header {
+            background-color: #ffffff;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #2563eb;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #475569;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #2563eb;
+        }
+
+        .btn {
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background-color: #2563eb;
+            color: white;
+            border: 1px solid #2563eb;
+        }
+
+        .btn-primary:hover {
+            background-color: #1d4ed8;
+        }
+
+        /* WhatsApp按钮特殊样式 */
+        .btn-whatsapp {
+            background-color: #25d366;
+            color: white;
+            border: 1px solid #25d366;
+            font-size: 1.1rem;
+            padding: 12px 28px;
+        }
+
+        .btn-whatsapp:hover {
+            background-color: #128c7e;
+        }
+
+        /* 英雄区域 */
+        .hero {
+            padding: 80px 0;
+            display: flex;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .hero-content {
+            flex: 1;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            color: #0f172a;
+        }
+
+        .hero-title span {
+            color: #2563eb;
+        }
+
+        .hero-desc {
+            font-size: 1.1rem;
+            color: #475569;
+            margin-bottom: 30px;
+            max-width: 500px;
+        }
+
+        .hero-image {
+            flex: 1;
+        }
+
+        .hero-image img {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        }
+
+        /* 指数概览 */
+        .index-overview {
+            padding: 60px 0;
+            background-color: #ffffff;
+            border-radius: 12px;
+            margin-bottom: 60px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 40px;
+            color: #0f172a;
+        }
+
+        .index-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px;
+            background-color: #f1f5f9;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .index-info h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .index-info p {
+            color: #64748b;
+        }
+
+        .index-value {
+            text-align: right;
+        }
+
+        .value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .change.positive {
+            color: #16a34a;
+            font-weight: 500;
+        }
+
+        .change.negative {
+            color: #dc2626;
+            font-weight: 500;
+        }
+
+        /* 热门股票 */
+        .stocks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .stock-card {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .stock-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .stock-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .stock-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .stock-ticker {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .stock-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        /* 市场动态 */
+        .market-news {
+            padding: 60px 0;
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .news-card {
+            background-color: #ffffff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .news-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .news-content {
+            padding: 20px;
+        }
+
+        .news-date {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .news-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: #0f172a;
+        }
+
+        .news-desc {
+            color: #475569;
+            font-size: 0.95rem;
+        }
+
+        /* 合作伙伴板块 */
+        .partner-section {
+            padding: 80px 0;
+            background-color: #ffffff;
+            border-radius: 12px;
+            margin: 60px auto;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+
+        .partner-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #0f172a;
+        }
+
+        .partner-desc {
+            font-size: 1.1rem;
+            color: #475569;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            line-height: 1.8;
+        }
+
+        /* 页脚 */
+        footer {
+            background-color: #0f172a;
+            color: #ffffff;
+            padding: 60px 0 30px;
+            margin-top: 40px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-col ul li a:hover {
+            color: #2563eb;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.2rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #1e293b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background-color: #2563eb;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #1e293b;
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding: 60px 0;
+                gap: 40px;
+            }
+
+            .hero-desc {
+                max-width: 100%;
+            }
+
+            .index-card {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+
+            .index-value {
+                text-align: center;
+            }
+
+            .partner-title {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.7rem;
+            }
+
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .partner-title {
+                font-size: 1.6rem;
+            }
+
+            .partner-desc {
+                font-size: 1rem;
+                padding: 0 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 - 已移除Iniciar Sesión按钮 -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <i class="fas fa-chart-line"></i>
+                    <span>IBEX Markets</span>
+                </div>
+                <div class="nav-links">
+                    <a href="#index">IBEX 35</a>
+                    <a href="#stocks">Acciones</a>
+                    <a href="#news">Noticias</a>
+                    <a href="#analysis">Análisis</a>
+                </div>
+                <!-- 已删除 Iniciar Sesión 按钮 -->
+            </nav>
+        </div>
+    </header>
+
+    <!-- 英雄区域 - 替换为WhatsApp联系按钮 -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">El Mercado Bursátil <span>Español</span> al Alcance de tu Mano</h1>
+                <p class="hero-desc">Seguimiento en tiempo real del IBEX 35, acciones españolas líderes y análisis experto para tomar decisiones informadas.</p>
+                <!-- 修改后的WhatsApp联系按钮 - 带咨询语和正确号码 -->
+                <a href="https://wa.me/85257614955?text=Quiero obtener acciones de alto potencial" target="_blank" class="btn btn-whatsapp">
+                    <i class="fab fa-whatsapp"></i>
+                    Contáctanos por WhatsApp
+                </a>
+            </div>
+            <div class="hero-image">
+                <img src="https://picsum.photos/id/180/600/400" alt="Mercado bursátil español">
+            </div>
+        </div>
+    </section>
+
+    <!-- 指数概览 -->
+    <section id="index" class="index-overview">
+        <div class="container">
+            <h2 class="section-title">Índice IBEX 35</h2>
+            <div class="index-card">
+                <div class="index-info">
+                    <h3>IBEX 35</h3>
+                    <p>Índice bursátil español principal - Actualizado: 17 Ene 2026</p>
+                </div>
+                <div class="index-value">
+                    <div class="value">9,245.80</div>
+                    <div class="change positive">+1.24% (+113.80)</div>
+                </div>
+            </div>
+
+            <h2 class="section-title">Acciones Populares</h2>
+            <div id="stocks" class="stocks-grid">
+                <!-- 股票卡片 1 -->
+                <div class="stock-card">
+                    <div class="stock-header">
+                        <div class="stock-name">Banco Santander</div>
+                        <div class="stock-ticker">SAN.MC</div>
+                    </div>
+                    <div class="stock-price">3.25 €</div>
+                    <div class="change positive">+0.87% (+0.03)</div>
+                </div>
+
+                <!-- 股票卡片 2 -->
+                <div class="stock-card">
+                    <div class="stock-header">
+                        <div class="stock-name">Telefónica</div>
+                        <div class="stock-ticker">TEF.MC</div>
+                    </div>
+                    <div class="stock-price">3.98 €</div>
+                    <div class="change positive">+1.53% (+0.06)</div>
+                </div>
+
+                <!-- 股票卡片 3 -->
+                <div class="stock-card">
+                    <div class="stock-header">
+                        <div class="stock-name">Inditex</div>
+                        <div class="stock-ticker">ITX.MC</div>
+                    </div>
+                    <div class="stock-price">31.45 €</div>
+                    <div class="change negative">-0.42% (-0.13)</div>
+                </div>
+
+                <!-- 股票卡片 4 -->
+                <div class="stock-card">
+                    <div class="stock-header">
+                        <div class="stock-name">BBVA</div>
+                        <div class="stock-ticker">BBVA.MC</div>
+                    </div>
+                    <div class="stock-price">5.82 €</div>
+                    <div class="change positive">+0.97% (+0.06)</div>
+                </div>
+
+                <!-- 股票卡片 5 -->
+                <div class="stock-card">
+                    <div class="stock-header">
+                        <div class="stock-name">Repsol</div>
+                        <div class="stock-ticker">REP.MC</div>
+                    </div>
+                    <div class="stock-price">12.78 €</div>
+                    <div class="change negative">-0.78% (-0.10)</div>
+                </div>
+
+                <!-- 股票卡片 6 -->
+                <div class="stock-card">
+                    <div class="stock-header">
+                        <div class="stock-name">Iberdrola</div>
+                        <div class="stock-ticker">IBE.MC</div>
+                    </div>
+                    <div class="stock-price">10.35 €</div>
+                    <div class="change positive">+0.48% (+0.05)</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 市场动态 -->
+    <section id="news" class="market-news">
+        <div class="container">
+            <h2 class="section-title">Noticias del Mercado Español</h2>
+            <div class="news-grid">
+                <!-- 新闻卡片 1 -->
+                <div class="news-card">
+                    <img src="https://picsum.photos/id/20/600/400" alt="Noticia mercado" class="news-img">
+                    <div class="news-content">
+                        <div class="news-date">16 Enero 2026</div>
+                        <h3 class="news-title">IBEX 35 cierra al alza impulsado por los bancos españoles</h3>
+                        <p class="news-desc">El índice bursátil español ha registrado ganancias este martes, lideradas por el sector bancario tras buenos resultados trimestrales.</p>
+                    </div>
+                </div>
+
+                <!-- 新闻卡片 2 -->
+                <div class="news-card">
+                    <img src="https://picsum.photos/id/48/600/400" alt="Noticia Inditex" class="news-img">
+                    <div class="news-content">
+                        <div class="news-date">15 Enero 2026</div>
+                        <h3 class="news-title">Inditex revisa al alza sus previsiones de beneficios para 2026</h3>
+                        <p class="news-desc">La compañía textil española ha anunciado una mejora en sus perspectivas financieras gracias a la buena evolución de sus ventas internacionales.</p>
+                    </div>
+                </div>
+
+                <!-- 新闻卡片 3 -->
+                <div class="news-card">
+                    <img src="https://picsum.photos/id/104/600/400" alt="Noticia energía" class="news-img">
+                    <div class="news-content">
+                        <div class="news-date">14 Enero 2026</div>
+                        <h3 class="news-title">Iberdrola invierte 5.000M€ en renovables en España para 2026</h3>
+                        <p class="news-desc">La compañía energética incrementa su apuesta por las energías renovables con nuevos proyectos en todo el territorio español.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 合作伙伴板块 -->
+    <section class="partner-section">
+        <div class="container">
+            <h2 class="partner-title">¿Quieres ser nuestro socio comercial?</h2>
+            <p class="partner-desc">Si estás interesado en colaborar con nosotros y formar parte de nuestra red de partners en el sector financiero español, no dudes en contactarnos a través de WhatsApp para más información.</p>
+            <!-- 修改后的WhatsApp联系按钮 - 带咨询语和正确号码 -->
+            <a href="https://wa.me/85257614955?text=Quiero obtener acciones de alto potencial" target="_blank" class="btn btn-whatsapp">
+                <i class="fab fa-whatsapp"></i>
+                Contáctanos por WhatsApp
+            </a>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>IBEX Markets</h3>
+                    <p>Información financiera actualizada del mercado bursátil español.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <!-- 同步更新页脚的WhatsApp号码 -->
+                        <a href="https://wa.me/85257614955?text=Quiero obtener acciones de alto potencial" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Recursos</h3>
+                    <ul>
+                        <li><a href="#">IBEX 35 en tiempo real</a></li>
+                        <li><a href="#">Análisis de mercado</a></li>
+                        <li><a href="#">Calendario económico</a></li>
+                        <li><a href="#">Herramientas de inversión</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Empresa</h3>
+                    <ul>
+                        <li><a href="#">Sobre nosotros</a></li>
+                        <li><a href="#">Contacto</a></li>
+                        <li><a href="#">Trabaja con nosotros</a></li>
+                        <li><a href="#">Prensa</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="#">Términos y condiciones</a></li>
+                        <li><a href="#">Política de privacidad</a></li>
+                        <li><a href="#">Aviso legal</a></li>
+                        <li><a href="#">Riesgos de inversión</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                © 2026 IBEX Markets. Todos los derechos reservados. La información proporcionada no constituye asesoramiento financiero.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 简单的滚动动画效果
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // 模拟股票价格轻微波动的效果
+        function updateStockPrices() {
+            const changeElements = document.querySelectorAll('.change');
+            changeElements.forEach(el => {
+                const isPositive = el.classList.contains('positive');
+                const currentValue = parseFloat(el.textContent.split('(')[1].replace(')', '').replace('+', '').replace('-', ''));
+                const newChange = (Math.random() * 0.05).toFixed(2);
+                
+                if (isPositive) {
+                    el.innerHTML = `+${(Math.random() * 1).toFixed(2)}% (+${newChange})`;
+                } else {
+                    el.innerHTML = `-${(Math.random() * 1).toFixed(2)}% (-${newChange})`;
+                }
+            });
+        }
+
+        // 每10秒更新一次股票价格（模拟实时数据）
+        setInterval(updateStockPrices, 10000);
+    </script>
+</body>
+</html>
