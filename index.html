@@ -126,25 +126,6 @@
             background-color: #128c7e;
         }
 
-        /* 新增爱心按钮样式 */
-        #contactButton {
-            background-color: #2563eb;
-            color: white;
-            border: 1px solid #2563eb;
-            font-size: 1.1rem;
-            padding: 12px 28px;
-            border-radius: 6px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-left: 15px;
-            font-family: 'Inter', sans-serif;
-        }
-
-        #contactButton:hover {
-            background-color: #1d4ed8;
-        }
-
         /* 英雄区域 */
         .hero {
             padding: 80px 0;
@@ -459,12 +440,6 @@
             .partner-title {
                 font-size: 1.8rem;
             }
-
-            /* 响应式调整爱心按钮 */
-            #contactButton {
-                margin-left: 0;
-                margin-top: 15px;
-            }
         }
 
         @media (max-width: 768px) {
@@ -526,9 +501,6 @@
                     <i class="fab fa-whatsapp"></i>
                     Contáctanos por WhatsApp
                 </a>
-
-                <!-- 爱心按钮 ❤️ -->
-                <button id="contactButton">❤️</button>
             </div>
             <div class="hero-image">
                 <img src="https://picsum.photos/id/180/600/400" alt="Mercado bursátil español">
@@ -735,13 +707,6 @@
         }
 
         setInterval(updateStockPrices, 10000);
-
-        // 爱心按钮点击事件
-        document.getElementById('contactButton').addEventListener('click', function() {
-            // insert_event_code_here;
-            alert('爱心按钮被点击了！请在这里添加你的事件逻辑');
-            // fbq('track', 'Contact'); // 可用于追踪转化
-        }, false);
     </script>
 </body>
 </html>
